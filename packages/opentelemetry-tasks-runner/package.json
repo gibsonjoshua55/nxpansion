@@ -1,7 +1,11 @@
 {
   "name": "@nxpansion/opentelemetry-tasks-runner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
+  "private": false,
+  "repository": {
+    "url": "https://github.com/gibsonjoshua55/nxpansion"
+  },
   "peerDependencies": {
     "@nrwl/devkit": "^13.0.1"
   }

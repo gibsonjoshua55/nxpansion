@@ -2,6 +2,9 @@
   "name": "nxpansion",
   "version": "0.0.0",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/gibsonjoshua55/nxpansion"
+  },
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
