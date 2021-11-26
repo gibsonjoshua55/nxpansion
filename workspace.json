@@ -1,7 +1,156 @@
 {
   "version": 2,
-  "projects": {},
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
+  "projects": {
+    "example-app": {
+      "root": "apps/example/app",
+      "sourceRoot": "apps/example/app/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/example/app",
+            "main": "apps/example/app/src/main.ts",
+            "tsConfig": "apps/example/app/tsconfig.app.json",
+            "assets": ["apps/example/app/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/example/app/src/environments/environment.ts",
+                  "with": "apps/example/app/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "example-app:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/example/app/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/example/app"],
+          "options": {
+            "jestConfig": "apps/example/app/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "print-trace-parent": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "echo TRACE PARENT: $TRACEPARENT"
+          }
+        }
+      },
+      "tags": []
+    },
+    "example-app-2": {
+      "root": "apps/example/app-2",
+      "sourceRoot": "apps/example/app-2/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/example/app-2",
+            "main": "apps/example/app-2/src/main.ts",
+            "tsConfig": "apps/example/app-2/tsconfig.app.json",
+            "assets": ["apps/example/app-2/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/example/app-2/src/environments/environment.ts",
+                  "with": "apps/example/app-2/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "example-app-2:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/example/app-2/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/example/app-2"],
+          "options": {
+            "jestConfig": "apps/example/app-2/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "opentelemetry-tasks-runner": {
+      "root": "packages/opentelemetry-tasks-runner",
+      "sourceRoot": "packages/opentelemetry-tasks-runner/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["packages/opentelemetry-tasks-runner/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/opentelemetry-tasks-runner"],
+          "options": {
+            "jestConfig": "packages/opentelemetry-tasks-runner/jest.config.js",
+            "passWithNoTests": true
+          },
+          "dependsOn": [
+            {
+              "target": "build",
+              "projects": "self"
+            }
+          ]
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/opentelemetry-tasks-runner",
+            "tsConfig": "packages/opentelemetry-tasks-runner/tsconfig.lib.json",
+            "packageJson": "packages/opentelemetry-tasks-runner/package.json",
+            "main": "packages/opentelemetry-tasks-runner/src/index.ts",
+            "assets": ["packages/opentelemetry-tasks-runner/*.md"],
+            "buildableProjectDepsInPackageJsonType": "peerDependencies"
+          }
+        }
+      },
+      "tags": []
+    }
   }
 }

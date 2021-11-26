@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nxpansion/opentelemetry-tasks-runner": [
+        "packages/opentelemetry-tasks-runner/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

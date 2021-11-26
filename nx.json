@@ -1,5 +1,5 @@
 {
-  "npmScope": "nxtension",
+  "npmScope": "nxpansion",
   "affected": {
     "defaultBase": "master"
   },
@@ -14,12 +14,28 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    },
+    "otel-e2e": {
+      "runner": "./dist/packages/opentelemetry-tasks-runner",
+      "options": {
+        "wrappedTasksRunner": "@nrwl/workspace/tasks-runners/default",
+        "wrappedTasksRunnerOptions": {
+          "cacheableOperations": ["build", "lint", "test", "e2e"]
+        },
+        "setupFile": "./packages/opentelemetry-tasks-runner/src/test/setup.js"
+      }
+    },
+    "otel": {
+      "runner": "./dist/packages/opentelemetry-tasks-runner",
+      "options": {
+        "wrappedTasksRunner": "@nrwl/nx-cloud",
+        "wrappedTasksRunnerOptions": {
+          "cacheableOperations": ["build", "lint", "test", "e2e"],
+          "accessToken": "MWJjZTdkMjAtOTgwNy00YjE4LTg1OGUtZTgxNzA2ZDVhZTc0fHJlYWQtd3JpdGU="
+        },
+        "exporter": "console"
       }
     }
   },
@@ -31,9 +47,12 @@
       }
     ]
   },
-  "projects": {},
   "workspaceLayout": {
-    "appsDir": "packages",
+    "appsDir": "apps",
     "libsDir": "packages"
-  }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/node"
+  },
+  "defaultProject": "example-app"
 }
