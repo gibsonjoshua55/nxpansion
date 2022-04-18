@@ -1,0 +1,51 @@
+{
+  "root": "packages/opentelemetry-tasks-runner",
+  "sourceRoot": "packages/opentelemetry-tasks-runner/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/opentelemetry-tasks-runner/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/packages/opentelemetry-tasks-runner"
+      ],
+      "options": {
+        "jestConfig": "packages/opentelemetry-tasks-runner/jest.config.js",
+        "passWithNoTests": true
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ]
+    },
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/opentelemetry-tasks-runner",
+        "tsConfig": "packages/opentelemetry-tasks-runner/tsconfig.lib.json",
+        "packageJson": "packages/opentelemetry-tasks-runner/package.json",
+        "main": "packages/opentelemetry-tasks-runner/src/index.ts",
+        "assets": [
+          "packages/opentelemetry-tasks-runner/*.md"
+        ],
+        "buildableProjectDepsInPackageJsonType": "peerDependencies"
+      }
+    }
+  },
+  "tags": []
+}

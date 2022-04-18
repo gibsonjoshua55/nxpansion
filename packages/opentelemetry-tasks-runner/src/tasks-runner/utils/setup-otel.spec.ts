@@ -5,8 +5,9 @@ import { mocked } from 'ts-jest/utils';
 import * as getDefaultOtelNodeSdkConfiguration from './get-default-otel-node-sdk-configuration';
 import * as requireDynamicModule from './require-dynamic-module';
 import * as setupOtel from './setup-otel';
-import { TasksRunnerArgs } from '../../plugins/nx-default-tasks-runner-instrumentation/types/tasks-runner-args.type';
 import { OpentelemetryTasksRunnerOptions } from '../types/opentelemetry-tasks-runner-options.type';
+import { CompositeLifeCycle } from 'nx/src/tasks-runner/life-cycle';
+import { TasksRunnerArgs } from '../types/tasks-runner-args.type';
 
 jest.mock('@opentelemetry/sdk-node');
 const mockedSdkNode = mocked(SdkNode);
@@ -35,8 +36,9 @@ describe('setupOtel', () => {
     describe('defaultOptions', () => {
       it('when no setup file is provided the default sdk options are used', () => {
         setupOtel.setupOtelSdk([], {
-          wrappedTasksRunner: '@nrwl/workspace/tasks-runners/default',
+          wrappedTasksRunner: 'nx/tasks-runners/default',
           wrappedTasksRunnerOptions: {},
+          lifeCycle: new CompositeLifeCycle([]),
         });
 
         expect(mockedSdkNode.NodeSDK).toBeCalledWith(defaultOptions);
@@ -44,8 +46,9 @@ describe('setupOtel', () => {
 
       it('when no setup file is provided, no additional context set provided to the context function', () => {
         const { context } = setupOtel.setupOtelSdk([], {
-          wrappedTasksRunner: '@nrwl/workspace/tasks-runners/default',
+          wrappedTasksRunner: 'nx/tasks-runners/default',
           wrappedTasksRunnerOptions: {},
+          lifeCycle: new CompositeLifeCycle([]),
         });
 
         expect(context).toEqual(undefined);
@@ -73,6 +76,7 @@ describe('setupOtel', () => {
             wrappedTasksRunner: '@nrwl/workspace/tasks-runners/default',
             wrappedTasksRunnerOptions: {},
             setupFile: './tools/setup-file.js',
+            lifeCycle: new CompositeLifeCycle([]),
           },
         ];
       });

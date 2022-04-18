@@ -35,6 +35,10 @@ To setup the tasks runner, add the below configuration your `nx.json` file.
 
 You can execute an Nx run command with this runner by including the `--runner=otel` option. If you want all tasks to always be instrumented, you can replace the default tasks runner options instead of adding a second runner configuration.
 
+## Compatible Versions
+
+As `nx` has been updating and moving its internal tasks runner implementation, version `0.1.0` of the `@nxpansion/opentelemetry-tasks-runner` is currently only supporting ~13.10.0 versions of `nx`. Version 14 is close on the horizon and Nx roadmaps/source code docs imply that version 15 will reach a more stable tasks runner API. As the implementation stabilizes we will aim support a wider range of `nx` versions.
+
 ## Configuration
 
 The `@nxpansion/opentelemetry-tasks-runner` supports the following configurations:
@@ -66,8 +70,16 @@ It is quite possible that the Nx Command you are running should be instrumented 
 TRACEPARENT=00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01 npx nx run app:build --runner=otel
 ```
 
-Similarly, the tasks runner sets the `TRACEPARENT` environment variable on the process for each executor ran by the runner. Your executor can use this environment variable if it would like to add instrumentation within the task.
+Additionally, the tasks runner sets the `traceParent` option child tasks that are executed by the runner. Your executor can use this option if like to add instrumentation within the task. This is similar to passing the trace parent as an override option below
+
+```
+
+npx nx run app:build --runner=otel --traceParent=00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
+```
+
+```
 
 ## Running unit tests
 
 Run `nx test opentelemetry-tasks-runner` to execute the tests via [Jest](https://jestjs.io).
+```

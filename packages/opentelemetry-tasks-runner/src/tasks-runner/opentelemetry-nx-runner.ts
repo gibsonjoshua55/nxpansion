@@ -1,13 +1,11 @@
-import { defer, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import type { TasksRunner } from 'nx/src/tasks-runner/tasks-runner';
 import { OpentelemetryTasksRunnerOptions } from './types/opentelemetry-tasks-runner-options.type';
 import { getContext } from './utils/get-context';
-import { instrumentTasksRunner } from './utils/instrument-tasks-runner';
+import {
+  instrumentObservableTasksRunner,
+  instrumentPromiseTasksRunner,
+} from './utils/instrument-tasks-runner';
 import { setupOtelSdk } from './utils/setup-otel';
-import type {
-  AffectedEvent,
-  TasksRunner,
-} from '@nrwl/workspace/src/tasks-runner/tasks-runner';
 
 /**
  * This tasks runner will create a root span for the command be executed and child span for
@@ -29,12 +27,9 @@ export const opentelemetryNxRunner: TasksRunner<
   const { sdk, context: setupContext } = setupOtelSdk(...options);
   const context = setupContext ?? getContext();
 
-  const start = async () => {
-    await sdk.start();
-  };
-  const observable: Observable<AffectedEvent> = defer(start).pipe(
-    switchMap(() => instrumentTasksRunner(sdk, context, options))
-  );
-
-  return observable;
+  if (runnerOptions.isLegacyTasksRunner) {
+    return instrumentObservableTasksRunner(sdk, context, options);
+  } else {
+    return instrumentPromiseTasksRunner(sdk, context, options);
+  }
 };

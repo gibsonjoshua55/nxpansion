@@ -1,4 +1,5 @@
 import { OTLPExporterConfigNode } from '@opentelemetry/exporter-otlp-grpc/build/src/types';
+import { LifeCycle } from 'nx/src/tasks-runner/life-cycle';
 
 export interface OpentelemetryTasksRunnerOptions<T> {
   /**
@@ -12,6 +13,10 @@ export interface OpentelemetryTasksRunnerOptions<T> {
    * These options will be passed to the wrapped tasks runner.
    */
   wrappedTasksRunnerOptions: T;
+  /**
+   * If true, the wrapped tasks runner is a legacy runner using observables.
+   */
+  isLegacyTasksRunner?: boolean;
   /**
    * Default: otlp
    *
@@ -28,4 +33,13 @@ export interface OpentelemetryTasksRunnerOptions<T> {
    * and exporters.
    */
   setupFile?: string;
+  /**
+   * If true, nx cache will not be used for executed tasks
+   */
+  skipNxCache?: boolean;
+  /**
+   * The lifecycle provided to this tasks runner that will be combined with the
+   * OpenTelemetry lifecycle.
+   */
+  lifeCycle: LifeCycle;
 }

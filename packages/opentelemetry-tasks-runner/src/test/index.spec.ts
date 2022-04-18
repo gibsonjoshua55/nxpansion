@@ -92,7 +92,7 @@ describe('@nxpansion/opentelemetry-nx-runner', () => {
         expect(span.attributes['task.id']).toEqual(`${project}:build`);
         expect(span.attributes['task.target.target']).toEqual(`build`);
         // this could vary depending on the cache state of the machine
-        expect(span.attributes['task.type']).toBeDefined();
+        expect(span.attributes['task.status']).toBeDefined();
       });
     });
   });
@@ -139,26 +139,8 @@ describe('@nxpansion/opentelemetry-nx-runner', () => {
         expect(span.attributes['task.id']).toEqual(`${project}:build`);
         expect(span.attributes['task.target.target']).toEqual(`build`);
         // this could vary depending on the cache state of the machine
-        expect(span.attributes['task.type']).toBeDefined();
+        expect(span.attributes['task.status']).toBeDefined();
       });
-    });
-  });
-
-  describe('TRACEPARENT', () => {
-    it('should pass the trace parent to the forked process in the TRACEPARENT env variable', async () => {
-      const output = await printTraceParent();
-      const spansStr = await promises.readFile(
-        join(__dirname, 'tmp/spans.json'),
-        'utf8'
-      );
-
-      const spans: WrittenSpan[] = JSON.parse(spansStr);
-
-      const printSpan = spans.find(
-        (span) =>
-          span.attributes['task.id'] === 'example-app:print-trace-parent'
-      );
-      expect(output).toContain(`${printSpan.traceId}-${printSpan.id}`);
     });
   });
 });
