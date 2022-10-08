@@ -37,7 +37,7 @@ You can execute an Nx run command with this runner by including the `--runner=ot
 
 ## Compatible Versions
 
-As `nx` has been updating and moving its internal tasks runner implementation, version `0.1.0` of the `@nxpansion/opentelemetry-tasks-runner` is currently only supporting ~13.10.0 versions of `nx`. Version 14 is close on the horizon and Nx roadmaps/source code docs imply that version 15 will reach a more stable tasks runner API. As the implementation stabilizes we will aim support a wider range of `nx` versions.
+As `nx` has been updating and moving its internal tasks runner implementation, `@nxpansion/opentelemetry-tasks-runner` is currently only supports versions of nx greater than 13.10.0. The runner has been tested on major versions >13.10.0 and 14.
 
 ## Configuration
 
