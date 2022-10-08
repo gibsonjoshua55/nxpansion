@@ -1,5 +1,5 @@
 const { credentials, Metadata } = require('@grpc/grpc-js');
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
 const { NodeSDK } = require('@opentelemetry/sdk-node');
 const { BatchSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 

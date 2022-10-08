@@ -23,7 +23,7 @@ To setup the tasks runner, add the below configuration your `nx.json` file.
         "wrappedTasksRunnerOptions": {
           "cacheableOperations": ["build", "lint", "test", "e2e"]
         },
-        "exporter": "otlp",
+        "exporter": "otlp-grpc",
         "otlpOptions": {
           "url": "grpc://localhost:4317"
         }
@@ -45,8 +45,8 @@ The `@nxpansion/opentelemetry-tasks-runner` supports the following configuration
 
 - `wrappedTasksRunner`: The tasks runner to instrument. At some level the tasks runner must use the default nx tasks runner to execute tasks. The `@nrwl/workspace/tasks-runners/default` and `@nrwl/nx-cloud` tasks runners both are supported.
 - `wrappedTasksRunnerOptions`: These options will be passed to the wrapped tasks runner.
-- `exporter`: Optional, `otlp` or `console`. The otlp uses gRPC to send traces via the OpenTelemetry Protocol. Defaults to `otlp`
-- `otlpOptions`: Optional. If using the OTLP exporter, you can provide any options as defined by the `@opentelemetry/exporter-otlp-grpc` `OTLPTraceExporter` here.
+- `exporter`: Optional, `otlp-grpc`, `otlp-http` or `console`. The otlp uses gRPC to send traces via the OpenTelemetry Protocol. Defaults to `otlp-grpc`
+- `otlpOptions`: Optional. If using the OTLP exporter, you can provide any options as defined by the `@opentelemetry/exporter-trace-otlp-grpc` `OTLPTraceExporter` here.
 - `setupFile`: Optional. [See documentation](#setup-file) on the setup file.
 
 ### Setup File
