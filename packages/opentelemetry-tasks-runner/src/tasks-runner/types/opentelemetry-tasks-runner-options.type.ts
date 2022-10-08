@@ -37,6 +37,11 @@ export interface OpentelemetryTasksRunnerOptions<T> {
    * If true, nx cache will not be used for executed tasks
    */
   skipNxCache?: boolean;
+
+  /**
+   * If true, the traceParent parameter will not be passed to ran tasks.
+   */
+  disableContextPropagation?: boolean;
   /**
    * The lifecycle provided to this tasks runner that will be combined with the
    * OpenTelemetry lifecycle.

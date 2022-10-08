@@ -48,6 +48,7 @@ The `@nxpansion/opentelemetry-tasks-runner` supports the following configuration
 - `exporter`: Optional, `otlp` or `console`. The otlp uses gRPC to send traces via the OpenTelemetry Protocol. Defaults to `otlp`
 - `otlpOptions`: Optional. If using the OTLP exporter, you can provide any options as defined by the `@opentelemetry/exporter-otlp-grpc` `OTLPTraceExporter` here.
 - `setupFile`: Optional. [See documentation](#setup-file) on the setup file.
+- `disableContextPropagation`: Optional. If `true`, the traceParent parameter will not be passed to tasks that are ran. [See documentation](#context-propagation).
 
 ### Setup File
 
@@ -70,16 +71,16 @@ It is quite possible that the Nx Command you are running should be instrumented 
 TRACEPARENT=00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01 npx nx run app:build --runner=otel
 ```
 
-Additionally, the tasks runner sets the `traceParent` option child tasks that are executed by the runner. Your executor can use this option if like to add instrumentation within the task. This is similar to passing the trace parent as an override option below
+Additionally, the tasks runner sets the `traceParent` option for child tasks that are executed by the runner. Your executor can use this option if you'd like to add instrumentation within the task. This is similar to passing the trace parent as an override option below
 
 ```
-
 npx nx run app:build --runner=otel --traceParent=00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
 ```
 
-```
+### Disable Context Propagation
+
+Some executors throw an error if additional parameters are passed in that are not defined by the executor's schema. You can disable context propagation using the `disableContextPropagation` option.
 
 ## Running unit tests
 
 Run `nx test opentelemetry-tasks-runner` to execute the tests via [Jest](https://jestjs.io).
-```

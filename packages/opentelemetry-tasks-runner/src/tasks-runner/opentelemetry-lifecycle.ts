@@ -29,7 +29,12 @@ export class OpentelemetryLifecycle implements LifeCycle {
     [taskId: string]: Span;
   } = {};
 
-  constructor(private readonly context?: Context) {
+  constructor(
+    private readonly context?: Context,
+    private readonly options: {
+      disableContextPropagation?: boolean;
+    } = {}
+  ) {
     this.tracer = trace.getTracer('opentelemetry-tasks-runner', '0.1.0');
   }
 
@@ -80,7 +85,9 @@ export class OpentelemetryLifecycle implements LifeCycle {
     this.spans[task.id] = span;
 
     const overrides = task.overrides ?? {};
-    task.overrides = this.setTraceParent(span, overrides);
+    if (!this.options.disableContextPropagation) {
+      task.overrides = this.setTraceParent(span, overrides);
+    }
 
     return span;
   }
