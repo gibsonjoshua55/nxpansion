@@ -40,7 +40,9 @@ export async function instrumentPromiseTasksRunner(
           ...options.wrappedTasksRunnerOptions,
           ...options,
           lifeCycle: new CompositeLifeCycle([
-            new OpentelemetryLifecycle(api.context.active()),
+            new OpentelemetryLifecycle(api.context.active(), {
+              disableContextPropagation: options.disableContextPropagation,
+            }),
             options.lifeCycle,
           ]),
         },
@@ -96,7 +98,9 @@ export function instrumentObservableTasksRunner(
             ...options.wrappedTasksRunnerOptions,
             ...options,
             lifeCycle: new CompositeLifeCycle([
-              new OpentelemetryLifecycle(activeContext),
+              new OpentelemetryLifecycle(activeContext, {
+                disableContextPropagation: options.disableContextPropagation,
+              }),
               options.lifeCycle,
             ]),
           },
