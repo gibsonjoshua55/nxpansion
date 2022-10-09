@@ -10,9 +10,6 @@
     "@nrwl/devkit": "^13.10.0",
     "nx": "^13.10.0"
   },
-  "dependencies": {
-    "@swc/helpers": "~0.3.3"
-  },
   "devDependencies": {},
   "peerDependenciesMeta": {
     "@opentelemetry/exporter-trace-otlp-grpc": {
