@@ -14,12 +14,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "parallel": 1
       }
     },
@@ -28,12 +23,7 @@
       "options": {
         "wrappedTasksRunner": "@nrwl/workspace/tasks-runners/default",
         "wrappedTasksRunnerOptions": {
-          "cacheableOperations": [
-            "build",
-            "lint",
-            "test",
-            "e2e"
-          ]
+          "cacheableOperations": ["build", "lint", "test", "e2e"]
         },
         "setupFile": "./packages/opentelemetry-tasks-runner/src/test/setup.js"
       }
@@ -43,15 +33,11 @@
       "options": {
         "wrappedTasksRunner": "@nrwl/nx-cloud",
         "wrappedTasksRunnerOptions": {
-          "cacheableOperations": [
-            "build",
-            "lint",
-            "test",
-            "e2e"
-          ],
+          "cacheableOperations": ["build", "lint", "test", "e2e"],
           "accessToken": "MWJjZTdkMjAtOTgwNy00YjE4LTg1OGUtZTgxNzA2ZDVhZTc0fHJlYWQtd3JpdGU="
         },
-        "exporter": "console"
+        "exporter": "console",
+        "isLegacyTasksRunner": true
       }
     }
   },

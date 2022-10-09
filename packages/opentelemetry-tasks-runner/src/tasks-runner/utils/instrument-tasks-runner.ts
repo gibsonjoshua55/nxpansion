@@ -7,7 +7,7 @@ import type {
   TaskStatus,
 } from 'nx/src/tasks-runner/tasks-runner';
 import { concat, defer, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { delayWhen, switchMap, tap } from 'rxjs/operators';
 import { VERSION } from '../../version.const';
 import { OpentelemetryLifecycle } from '../opentelemetry-lifecycle';
 import { OpentelemetryTasksRunnerOptions } from '../types/opentelemetry-tasks-runner-options.type';
@@ -114,16 +114,17 @@ export function instrumentObservableTasksRunner(
             'command.tasksCount': tasks.length,
           });
 
-          return concat(
-            tasksRunnerObservable,
-            defer(async () => {
-              span.end();
-              await otelSdk.shutdown();
-            })
-          ) as Observable<AffectedEvent>;
+          return tasksRunnerObservable.pipe(
+            delayWhen(() =>
+              defer(async () => {
+                span.end();
+                await otelSdk.shutdown();
+              })
+            )
+          );
         } else {
           throw new Error(
-            'This tasks runner does not return a Promise. It is likely a legacy tasks runner.'
+            'This tasks runner does not return a Promise. It is likely a legacy tasks runner. Try setting `"isLegacyTasksRunner": true` in your tasks runner options.'
           );
         }
       });
