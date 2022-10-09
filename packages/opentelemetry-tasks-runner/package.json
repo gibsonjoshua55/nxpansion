@@ -13,5 +13,13 @@
   "dependencies": {
     "@swc/helpers": "~0.3.3"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "peerDependenciesMeta": {
+    "@opentelemetry/exporter-trace-otlp-grpc": {
+      "optional": true
+    },
+    "@opentelemetry/exporter-trace-otlp-http": {
+      "optional": true
+    }
+  }
 }

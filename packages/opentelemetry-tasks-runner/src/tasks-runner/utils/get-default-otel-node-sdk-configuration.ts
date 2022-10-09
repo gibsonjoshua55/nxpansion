@@ -1,5 +1,3 @@
-import { OTLPTraceExporter as OTLPGRPCTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
-import { OTLPTraceExporter as OTLPHTTPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { Resource } from '@opentelemetry/resources';
 import { NodeSDKConfiguration } from '@opentelemetry/sdk-node';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
@@ -14,12 +12,26 @@ export function getDefaultOtelNodeSdkConfiguration(
   options: OpentelemetryTasksRunnerOptions<any>
 ): Partial<NodeSDKConfiguration> {
   let spanExporter: SpanExporter;
-  if (options.exporter === 'console') {
-    spanExporter = new ConsoleSpanExporter();
-  } else if (options.exporter === 'otlp-http') {
-    spanExporter = new OTLPHTTPTraceExporter(options.otlpOptions);
+  if (options.exporter === 'otlp-http') {
+    const {
+      OTLPTraceExporter,
+    } = require('@opentelemetry/exporter-trace-otlp-http');
+    spanExporter = new OTLPTraceExporter(options.otlpOptions);
+  } else if (options.exporter === 'otlp-grpc') {
+    const {
+      OTLPTraceExporter,
+    } = require('@opentelemetry/exporter-trace-otlp-grpc');
+    spanExporter = new OTLPTraceExporter(options.otlpOptions);
+  } else if (options.exporter === 'otlp') {
+    console.warn(
+      'The otlp option is deprecated. This will be removed in future versions. Use otlp-grpc instead'
+    );
+    const {
+      OTLPTraceExporter,
+    } = require('@opentelemetry/exporter-trace-otlp-grpc');
+    spanExporter = new OTLPTraceExporter(options.otlpOptions);
   } else {
-    spanExporter = new OTLPGRPCTraceExporter(options.otlpOptions);
+    spanExporter = new ConsoleSpanExporter();
   }
   const spanProcessor = new BatchSpanProcessor(spanExporter);
   return {

@@ -1,4 +1,3 @@
-import { OTLPExporterConfigNode } from '@opentelemetry/exporter-trace-otlp-grpc/build/src/types';
 import { LifeCycle } from 'nx/src/tasks-runner/life-cycle';
 
 export interface OpentelemetryTasksRunnerOptions<T> {
@@ -24,10 +23,10 @@ export interface OpentelemetryTasksRunnerOptions<T> {
    */
   exporter?: 'otlp' | 'otlp-grpc' | 'otlp-http' | 'console';
   /**
-   * If using the OTLP exporter, you can provide an options to be passed into
+   * If using an OTLP exporter, you can provide any options to be passed into
    * the exporter here.
    */
-  otlpOptions?: OTLPExporterConfigNode;
+  otlpOptions?: any;
   /**
    * Allows a custom NodeSdk to be set up, allowing for custom processors
    * and exporters.

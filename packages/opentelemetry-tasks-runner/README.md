@@ -45,8 +45,8 @@ The `@nxpansion/opentelemetry-tasks-runner` supports the following configuration
 
 - `wrappedTasksRunner`: The tasks runner to instrument. At some level the tasks runner must use the default nx tasks runner to execute tasks. The `@nrwl/workspace/tasks-runners/default` and `@nrwl/nx-cloud` tasks runners both are supported.
 - `wrappedTasksRunnerOptions`: These options will be passed to the wrapped tasks runner.
-- `exporter`: Optional, `otlp-grpc`, `otlp-http` or `console`. The otlp uses gRPC to send traces via the OpenTelemetry Protocol. Defaults to `otlp-grpc`
-- `otlpOptions`: Optional. If using the OTLP exporter, you can provide any options as defined by the `@opentelemetry/exporter-trace-otlp-grpc` `OTLPTraceExporter` here.
+- `exporter`: Optional, `otlp-grpc`, `otlp-http` or `console`. Defaults to `console`.
+- `otlpOptions`: Optional. If using the OTLP exporter, you can provide any options as defined by the `@opentelemetry/exporter-trace-otlp-grpc` or `@opentelemetry/exporter-trace-otlp-http`.
 - `setupFile`: Optional. [See documentation](#setup-file) on the setup file.
 - `disableContextPropagation`: Optional. If `true`, the traceParent parameter will not be passed to tasks that are ran. [See documentation](#context-propagation).
 - `isLegacyTasksRunner`: Option. Some older tasks runners return an observable instead of a Promise. If the tasks runner you are wrapping returns an observable, set this option to `true`.
