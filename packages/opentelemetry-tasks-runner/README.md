@@ -49,6 +49,7 @@ The `@nxpansion/opentelemetry-tasks-runner` supports the following configuration
 - `otlpOptions`: Optional. If using the OTLP exporter, you can provide any options as defined by the `@opentelemetry/exporter-trace-otlp-grpc` `OTLPTraceExporter` here.
 - `setupFile`: Optional. [See documentation](#setup-file) on the setup file.
 - `disableContextPropagation`: Optional. If `true`, the traceParent parameter will not be passed to tasks that are ran. [See documentation](#context-propagation).
+- `isLegacyTasksRunner`: Option. Some older tasks runners return an observable instead of a Promise. If the tasks runner you are wrapping returns an observable, set this option to `true`.
 
 ### Setup File
 
