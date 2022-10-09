@@ -1,4 +1,4 @@
-import { OTLPExporterConfigNode } from '@opentelemetry/exporter-otlp-grpc/build/src/types';
+import { OTLPExporterConfigNode } from '@opentelemetry/exporter-trace-otlp-grpc/build/src/types';
 import { LifeCycle } from 'nx/src/tasks-runner/life-cycle';
 
 export interface OpentelemetryTasksRunnerOptions<T> {
@@ -22,7 +22,7 @@ export interface OpentelemetryTasksRunnerOptions<T> {
    *
    * The otlp uses gRPC to send traces via the OpenTelemetry Protocol.
    */
-  exporter?: 'otlp' | 'console';
+  exporter?: 'otlp' | 'otlp-grpc' | 'otlp-http' | 'console';
   /**
    * If using the OTLP exporter, you can provide an options to be passed into
    * the exporter here.
